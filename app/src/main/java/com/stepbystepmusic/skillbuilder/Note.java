@@ -15,6 +15,10 @@ public class Note {
         return mSoundPoolID;
     }
 
+    String getmName(){
+        return mName;
+    }
+
     // Setters
     void setmSoundPoolID(int ID){
         mSoundPoolID = ID;

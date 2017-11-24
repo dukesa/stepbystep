@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.widget.TextView;
 
+
 public class MusicPlayer {
     com.stepbystepmusic.skillbuilder.Scale mScale;
     SoundPool mSoundPool;
+    TextView mTextView;
 
-
-    void initialize(){
+    void initialize(TextView textView){
 
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -24,24 +25,29 @@ public class MusicPlayer {
                 .build();
 
         mSoundPool = soundPool;
+        mTextView = textView;
     }
 
     void play(){
         int streamID = 0;
 
-//             Code here executes on main thread after user presses button
-//        TextView myAwesomeTextView = (TextView)findViewById(R.id.main_text);
-//        myAwesomeTextView.setText("My Awesome Text");
+
+
         try {
 
             // Play com.stepbystepmusic.skillbuilder.Scale
             ArrayList <Note> note_array = mScale.getNoteArray();
-            for (Note note: note_array) {
+            for (final Note note: note_array) {
 
 //                for (int i = 0; i < mScale.getNoteArray().size(); i++) {
                 if (streamID != 0) {
                     mSoundPool.stop(streamID);
                 }
+                mTextView.post(new Runnable() {
+                                  public void run() {
+                                      mTextView.setText(note.getmName());
+                                  }
+                              });
                 streamID = mSoundPool.play(note.getmSoundPoolID(),1,1,1,0,1);
                 Thread.sleep(mScale.getmNoteDuration_ms());
             }
@@ -49,6 +55,13 @@ public class MusicPlayer {
             // hold for 3 more beats then stop
             Thread.sleep(3*mScale.getmNoteDuration_ms());
             mSoundPool.stop(streamID);
+
+            // Reset scale name
+            mTextView.post(new Runnable() {
+                public void run() {
+                    mTextView.setText("C Major");
+                }
+            });
 
         } catch (InterruptedException exception){
             exception.printStackTrace();

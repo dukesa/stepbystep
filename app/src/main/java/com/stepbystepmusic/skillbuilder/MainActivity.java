@@ -21,7 +21,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize music player
-        MainMusicPlayer.initialize();
+        TextView myAwesomeTextView = (TextView)findViewById(R.id.main_text);
+        myAwesomeTextView.setText("C Major");
+
+        MainMusicPlayer.initialize(myAwesomeTextView);
+
 
         // Create Scale
         int bpm = 120;
@@ -35,7 +39,15 @@ public class MainActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.play_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                MainMusicPlayer.play();
+                // todo: move threading inside of MusicPlayer class
+                Thread t1 = new Thread(new Runnable() {
+                    public void run()
+                    {
+                        // code goes here.
+                        MainMusicPlayer.play();
+                    }});
+                t1.start();
+
             }
         });
     }
