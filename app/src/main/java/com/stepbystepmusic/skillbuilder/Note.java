@@ -1,16 +1,35 @@
 package com.stepbystepmusic.skillbuilder;
 
 public class Note {
-    private String mMusicFile;
+    private String mName;
+    private int mMusicFile;
     private String mDisplayLetter;
+    private int mSoundPoolID;
 
-    // Setters
-    void setmDisplayLetter(){
-
+    // Getters
+    int getmMusicFile(){
+        return mMusicFile;
     }
 
-    void setmMusicFile() {
+    int getmSoundPoolID(){
+        return mSoundPoolID;
+    }
 
+    // Setters
+    void setmSoundPoolID(int ID){
+        mSoundPoolID = ID;
+    }
+
+    void setmName(String name){
+        mName = name;
+    }
+
+    void setmDisplayLetter(String letter){
+        mDisplayLetter = letter;
+    }
+
+    void setmMusicFile(int fileID) {
+        mMusicFile = fileID;
     }
 
     // Showers
